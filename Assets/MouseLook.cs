@@ -5,25 +5,44 @@ using UnityEngine;
 public class MouseLook : MonoBehaviour
 {
     public float mouseSensitivity = 10;
+    [SerializeField] private Transform debugHitPointTransform;
 
     private CharacterController characterController;
     private float cameraVerticalAngle;
     private float characterVelocityY;
     private Camera playerCamera;
+    private State state;
+    private Vector3 hookshotPosition;
+
+    private enum State
+    {
+        Normal,
+        HookshotFlyingPlayer
+    }
 
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
         playerCamera = transform.Find("Main Camera").GetComponent<Camera>();
         Cursor.lockState = CursorLockMode.Locked;
+        state = State.Normal;
     }
 
 
     // Update is called once per frame
-   private void Update()
+    private void Update()
     {
-        HandleCharacterLook();
-        HandleCharacterMovement();
+        switch (state) {
+            default:
+            case State.Normal:
+            HandleCharacterLook();
+            HandleCharacterMovement();
+            HandleHookshotStart();
+                break;
+            case State.HookshotFlyingPlayer:
+                HandleHookshotMovement();
+                break;
+        }
     }
 
     private void HandleCharacterLook()
@@ -69,5 +88,29 @@ public class MouseLook : MonoBehaviour
         characterController.Move(characterVelocity * Time.deltaTime);
 
     }
+
+    private void HandleHookshotStart()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+          if (Physics.Raycast(playerCamera.transform.position,playerCamera.transform.forward, out RaycastHit raycastHit)){
+                debugHitPointTransform.position = raycastHit.point;
+                hookshotPosition = raycastHit.point;
+                state = State.HookshotFlyingPlayer;
+            }
+        }
+    }
+
+
+    private void HandleHookshotMovement()
+    {
+        Vector3 hookshotDir = (hookshotPosition - transform.position).normalized;
+
+        float hookshotSpeed = 5f;
+
+
+        characterController.Move(hookshotDir * hookshotSpeed * Time.deltaTime);
+    }
+
 
 }
