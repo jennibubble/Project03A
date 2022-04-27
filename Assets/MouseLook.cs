@@ -6,18 +6,21 @@ public class MouseLook : MonoBehaviour
 {
     public float mouseSensitivity = 10;
     [SerializeField] private Transform debugHitPointTransform;
-
+    [SerializeField] private Transform hookshotTransform;
     private CharacterController characterController;
     private float cameraVerticalAngle;
     private float characterVelocityY;
     private Camera playerCamera;
     private State state;
     private Vector3 hookshotPosition;
+    private float hookshotSize;
 
     private enum State
     {
         Normal,
-        HookshotFlyingPlayer
+        HookshotThrown,
+        HookshotFlyingPlayer,
+        
     }
 
     private void Awake()
@@ -26,6 +29,7 @@ public class MouseLook : MonoBehaviour
         playerCamera = transform.Find("Main Camera").GetComponent<Camera>();
         Cursor.lockState = CursorLockMode.Locked;
         state = State.Normal;
+        hookshotTransform.gameObject.SetActive(false);
     }
 
 
@@ -39,8 +43,13 @@ public class MouseLook : MonoBehaviour
             HandleCharacterMovement();
             HandleHookshotStart();
                 break;
+            case State.HookshotThrown:
+                HandleHookshotThrow();
+                HandleCharacterMovement();
+                break;
             case State.HookshotFlyingPlayer:
                 HandleHookshotMovement();
+                //HandleCharacterLook();
                 break;
         }
     }
@@ -96,8 +105,24 @@ public class MouseLook : MonoBehaviour
           if (Physics.Raycast(playerCamera.transform.position,playerCamera.transform.forward, out RaycastHit raycastHit)){
                 debugHitPointTransform.position = raycastHit.point;
                 hookshotPosition = raycastHit.point;
-                state = State.HookshotFlyingPlayer;
+                hookshotSize = 0f;
+                hookshotTransform.gameObject.SetActive(true);
+                state = State.HookshotThrown;
             }
+        }
+    }
+
+    private void HandleHookshotThrow()
+    {
+        hookshotTransform.LookAt(hookshotPosition);
+
+        float hookshotThrowSpeed = 40f;
+        hookshotSize += hookshotThrowSpeed * Time.deltaTime;
+        hookshotTransform.localScale = new Vector3(1, 1, hookshotSize);
+
+        if (hookshotSize >= Vector3.Distance(transform.position, hookshotPosition))
+        {
+            state = State.HookshotFlyingPlayer;
         }
     }
 
@@ -106,10 +131,21 @@ public class MouseLook : MonoBehaviour
     {
         Vector3 hookshotDir = (hookshotPosition - transform.position).normalized;
 
-        float hookshotSpeed = 5f;
+        float hookshotSpeedMin = 10f;
+        float hookshotSpeedMax = 40f;
+        float hookshotSpeed = Mathf.Clamp(Vector3.Distance(transform.position, hookshotPosition), hookshotSpeedMin, hookshotSpeedMax);
+        float hookshotSpeedMultiplier = 2f;
 
 
-        characterController.Move(hookshotDir * hookshotSpeed * Time.deltaTime);
+
+        characterController.Move(hookshotDir * hookshotSpeed * hookshotSpeedMultiplier * Time.deltaTime);
+
+        float reachedHookshotPositionDistance = 3f;
+        if (Vector3.Distance(transform.position, hookshotPosition) < reachedHookshotPositionDistance)
+        {
+            state = State.Normal;
+            hookshotTransform.gameObject.SetActive(false);
+        }
     }
 
 
