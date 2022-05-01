@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class MouseLook : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class MouseLook : MonoBehaviour
     private float cameraVerticalAngle;
     private float characterVelocityY;
     private Camera playerCamera;
+    private CinemachineVirtualCamera cameras;
     private State state;
     private Vector3 hookshotPosition;
     private float hookshotSize;
@@ -26,7 +28,8 @@ public class MouseLook : MonoBehaviour
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
-        playerCamera = transform.Find("Main Camera").GetComponent<Camera>();
+       playerCamera = transform.Find("Main Camera").GetComponent<Camera>();
+        
         Cursor.lockState = CursorLockMode.Locked;
         state = State.Normal;
         hookshotTransform.gameObject.SetActive(false);
