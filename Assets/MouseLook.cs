@@ -14,6 +14,7 @@ public class MouseLook : MonoBehaviour
     private float cameraVerticalAngle;
     private float characterVelocityY;
     private Camera playerCamera;
+    private Camera playerCamera3;
     private CinemachineVirtualCamera cameras;
     private State state;
     private Vector3 hookshotPosition;
@@ -21,6 +22,8 @@ public class MouseLook : MonoBehaviour
     public GameObject cam1;
     public GameObject cam2;
     public GameObject cam3;
+    public GameObject crosshair;
+    
 
     private enum State
     {
@@ -34,7 +37,8 @@ public class MouseLook : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
        playerCamera = transform.Find("Main Camera").GetComponent<Camera>();
-        
+       playerCamera3 = transform.Find("3rd Person").GetComponent<Camera>();
+
         Cursor.lockState = CursorLockMode.Locked;
         state = State.Normal;
         hookshotTransform.gameObject.SetActive(false);
@@ -52,6 +56,7 @@ public class MouseLook : MonoBehaviour
             HandleHookshotStart();
                 break;
             case State.HookshotThrown:
+               
                 HandleHookshotThrow();
                 HandleCharacterMovement();
                 break;
@@ -74,7 +79,7 @@ public class MouseLook : MonoBehaviour
         cameraVerticalAngle = Mathf.Clamp(cameraVerticalAngle, -89f, 89f);
 
         playerCamera.transform.localEulerAngles = new Vector3(cameraVerticalAngle, 0, 0);
-
+        playerCamera3.transform.localEulerAngles = new Vector3(cameraVerticalAngle, 0, 0);
     }
 
     private void HandleCharacterMovement()
@@ -106,16 +111,21 @@ public class MouseLook : MonoBehaviour
 
     }
 
+   
     private void HandleHookshotStart()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
             cam2.SetActive(false);
             cam1.SetActive(true);
+            cam3.SetActive(false);
+
+            crosshair.SetActive(true);
+
             if (Physics.Raycast(playerCamera.transform.position,playerCamera.transform.forward, out RaycastHit raycastHit)){
                 debugHitPointTransform.position = raycastHit.point;
                 hookshotPosition = raycastHit.point;
-                hookshotSize = 0f;
+                hookshotSize = 10f;
                 hookshotTransform.gameObject.SetActive(true);
                 
                
@@ -127,6 +137,11 @@ public class MouseLook : MonoBehaviour
 
     private void HandleHookshotThrow()
     {
+
+        cam3.SetActive(false);
+        cam1.SetActive(false);
+        cam2.SetActive(false);
+
         hookshotTransform.LookAt(hookshotPosition);
 
         float hookshotThrowSpeed = 40f;
@@ -151,6 +166,7 @@ public class MouseLook : MonoBehaviour
 
 
 
+
         characterController.Move(hookshotDir * hookshotSpeed * hookshotSpeedMultiplier * Time.deltaTime);
 
         float reachedHookshotPositionDistance = 3f;
@@ -158,9 +174,11 @@ public class MouseLook : MonoBehaviour
         {
             state = State.Normal;
             hookshotTransform.gameObject.SetActive(false);
-         
+
+            cam3.SetActive(true);
             cam1.SetActive(false);
             cam2.SetActive(true);
+            crosshair.SetActive(false);
         }
     }
 

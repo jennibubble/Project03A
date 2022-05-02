@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CustomBlends:
   - m_From: VirtualCamera1
-    m_To: Virtual Camera2
+    m_To: VirtualCamera1
     m_Blend:
       m_Style: 2
       m_Time: 1
@@ -24,11 +24,11 @@ MonoBehaviour:
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
-  - m_From: Virtual Camera2
+  - m_From: VirtualCamera1
     m_To: VirtualCamera1
     m_Blend:
       m_Style: 5
-      m_Time: 2
+      m_Time: 1
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []
