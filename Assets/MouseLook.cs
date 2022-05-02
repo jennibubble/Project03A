@@ -6,8 +6,10 @@ using Cinemachine;
 public class MouseLook : MonoBehaviour
 {
     public float mouseSensitivity = 10;
-    [SerializeField] private Transform debugHitPointTransform;
-    [SerializeField] private Transform hookshotTransform;
+    [SerializeField]  Transform debugHitPointTransform;
+
+    [SerializeField] Transform hookshotTransform;
+
     private CharacterController characterController;
     private float cameraVerticalAngle;
     private float characterVelocityY;
@@ -16,6 +18,9 @@ public class MouseLook : MonoBehaviour
     private State state;
     private Vector3 hookshotPosition;
     private float hookshotSize;
+    public GameObject cam1;
+    public GameObject cam2;
+    public GameObject cam3;
 
     private enum State
     {
@@ -105,12 +110,17 @@ public class MouseLook : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-          if (Physics.Raycast(playerCamera.transform.position,playerCamera.transform.forward, out RaycastHit raycastHit)){
+            cam2.SetActive(false);
+            cam1.SetActive(true);
+            if (Physics.Raycast(playerCamera.transform.position,playerCamera.transform.forward, out RaycastHit raycastHit)){
                 debugHitPointTransform.position = raycastHit.point;
                 hookshotPosition = raycastHit.point;
                 hookshotSize = 0f;
                 hookshotTransform.gameObject.SetActive(true);
+                
+               
                 state = State.HookshotThrown;
+               
             }
         }
     }
@@ -148,6 +158,9 @@ public class MouseLook : MonoBehaviour
         {
             state = State.Normal;
             hookshotTransform.gameObject.SetActive(false);
+         
+            cam1.SetActive(false);
+            cam2.SetActive(true);
         }
     }
 
