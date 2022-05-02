@@ -36,7 +36,7 @@ MonoBehaviour:
         m_PostInfinity: 0
         m_RotationOrder: 0
   - m_From: VirtualCamera1
-    m_To: Virtual Camera2 (1)
+    m_To: Virtual Camera3
     m_Blend:
       m_Style: 1
       m_Time: 2
