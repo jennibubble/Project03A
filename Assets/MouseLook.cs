@@ -22,6 +22,7 @@ public class MouseLook : MonoBehaviour
     public GameObject cam1;
     public GameObject cam2;
     public GameObject cam3;
+    public GameObject cam4;
     public GameObject crosshair;
     
 
@@ -123,12 +124,13 @@ public class MouseLook : MonoBehaviour
             crosshair.SetActive(true);
 
             if (Physics.Raycast(playerCamera.transform.position,playerCamera.transform.forward, out RaycastHit raycastHit)){
+                
                 debugHitPointTransform.position = raycastHit.point;
                 hookshotPosition = raycastHit.point;
                 hookshotSize = 10f;
                 hookshotTransform.gameObject.SetActive(true);
-                
                
+
                 state = State.HookshotThrown;
                
             }
@@ -138,9 +140,11 @@ public class MouseLook : MonoBehaviour
     private void HandleHookshotThrow()
     {
 
-        cam3.SetActive(false);
-        cam1.SetActive(false);
-        cam2.SetActive(false);
+   
+        cam3.SetActive(true);
+        cam4.SetActive(true);
+       // cam2.SetActive(false);
+
 
         hookshotTransform.LookAt(hookshotPosition);
 
@@ -175,7 +179,9 @@ public class MouseLook : MonoBehaviour
             state = State.Normal;
             hookshotTransform.gameObject.SetActive(false);
 
+
             cam3.SetActive(true);
+            cam4.SetActive(false);
             cam1.SetActive(false);
             cam2.SetActive(true);
             crosshair.SetActive(false);
