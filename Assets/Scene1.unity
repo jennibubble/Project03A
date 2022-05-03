@@ -167,7 +167,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7784091, y: 1}
+    m_SensorSize: {x: 1.7767175, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -438,7 +438,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7784091, y: 1}
+    m_SensorSize: {x: 1.7767175, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -454,8 +454,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 270420965}
-  m_LocalRotation: {x: -0.076982796, y: 0.9203023, z: -0.30552512, w: -0.2318875}
-  m_LocalPosition: {x: 2.3124566, y: 7.870536, z: -3.912349}
+  m_LocalRotation: {x: -0.0769828, y: 0.9203023, z: -0.3055251, w: -0.2318875}
+  m_LocalPosition: {x: 2.3124566, y: 7.870536, z: -3.9123485}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 514997752}
@@ -1484,7 +1484,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7784091, y: 1}
+    m_SensorSize: {x: 1.7767175, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1898,7 +1898,7 @@ GameObject:
   - component: {fileID: 1385742425}
   m_Layer: 0
   m_Name: Cube (3)
-  m_TagString: Selectable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

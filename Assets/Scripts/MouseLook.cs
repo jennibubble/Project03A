@@ -10,6 +10,8 @@ public class MouseLook : MonoBehaviour
 
     [SerializeField] Transform hookshotTransform;
 
+    [SerializeField] AudioClip _FlySound = null;
+
     private CharacterController characterController;
     private float cameraVerticalAngle;
     private float characterVelocityY;
@@ -129,8 +131,9 @@ public class MouseLook : MonoBehaviour
                 hookshotPosition = raycastHit.point;
                 hookshotSize = 10f;
                 hookshotTransform.gameObject.SetActive(true);
-               
 
+                AudioHelper.PlayClip2D(_FlySound, 3);
+                
                 state = State.HookshotThrown;
                
             }
@@ -154,6 +157,8 @@ public class MouseLook : MonoBehaviour
 
         if (hookshotSize >= Vector3.Distance(transform.position, hookshotPosition))
         {
+            
+
             state = State.HookshotFlyingPlayer;
         }
     }

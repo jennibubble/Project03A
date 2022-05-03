@@ -8,7 +8,9 @@ public class SelectionManager : MonoBehaviour
     [SerializeField] private Material highlightMaterial;
     [SerializeField] private Material defaultMaterial;
 
-    [SerializeField] GameObject triggerGraphic1;
+    [SerializeField] AudioClip _TriggerSound = null;
+
+    
 
 
     private Transform _selection;
@@ -32,7 +34,10 @@ public class SelectionManager : MonoBehaviour
                 var selectionRenderer = selection.GetComponent<Renderer>();
                 if (selectionRenderer != null)
                 {
+                    AudioHelper.PlayClip2D(_TriggerSound, 1);
                     selectionRenderer.material = highlightMaterial;
+
+                    
                     //triggerGraphic1.SetActive(true);
                 }
                 _selection = selection;
