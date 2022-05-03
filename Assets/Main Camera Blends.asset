@@ -38,19 +38,8 @@ MonoBehaviour:
   - m_From: Virtual Camera2
     m_To: Virtual Camera3
     m_Blend:
-      m_Style: 4
-      m_Time: 1
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: Virtual Camera3
-    m_To: Virtual Camera2
-    m_Blend:
       m_Style: 1
-      m_Time: 2
+      m_Time: 1
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []
