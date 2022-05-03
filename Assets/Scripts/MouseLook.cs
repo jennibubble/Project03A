@@ -83,10 +83,12 @@ public class MouseLook : MonoBehaviour
 
         playerCamera.transform.localEulerAngles = new Vector3(cameraVerticalAngle, 0, 0);
         playerCamera3.transform.localEulerAngles = new Vector3(cameraVerticalAngle, 0, 0);
+        
     }
 
     private void HandleCharacterMovement()
     {
+        
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveZ = Input.GetAxisRaw("Vertical");
 
@@ -119,11 +121,14 @@ public class MouseLook : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
+            
             cam2.SetActive(false);
             cam1.SetActive(false);
             cam3.SetActive(false);
 
             crosshair.SetActive(true);
+            
+
 
             if (Physics.Raycast(playerCamera.transform.position,playerCamera.transform.forward, out RaycastHit raycastHit)){
                 
@@ -131,6 +136,7 @@ public class MouseLook : MonoBehaviour
                 hookshotPosition = raycastHit.point;
                 hookshotSize = 10f;
                 hookshotTransform.gameObject.SetActive(true);
+                
 
                 AudioHelper.PlayClip2D(_FlySound, 3);
                 
