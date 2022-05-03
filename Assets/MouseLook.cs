@@ -140,7 +140,7 @@ public class MouseLook : MonoBehaviour
     private void HandleHookshotThrow()
     {
 
-   
+        crosshair.SetActive(false);
         cam3.SetActive(true);
         cam4.SetActive(true);
        // cam2.SetActive(false);
